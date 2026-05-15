@@ -18,7 +18,7 @@ import { useAuth } from '../hooks/useAuth';
 export function PublicRoute() {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <div>Cargando...</div>;
-  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Outlet />;
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Outlet />; a
 }
 
 export function PrivateRoute() {
