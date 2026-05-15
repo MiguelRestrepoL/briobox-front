@@ -25,11 +25,12 @@ export default function DashboardPage() {
   const [active, setActive] = useState('Dashboard');
   const [loggingOut, setLoggingOut] = useState(false);
 
-  const handleLogout = async () => {
-    setLoggingOut(true);
-    await logout();
-    navigate('/login');
-  };
+const handleLogout = async () => {
+  setLoggingOut(true);
+  await logout();
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  navigate('/login');
+};
 
   const dark = darkMode;
 
