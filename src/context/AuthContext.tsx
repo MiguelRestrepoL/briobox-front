@@ -9,13 +9,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    authApi
-      .verifyAuth()
-      .then(() => refreshUser())
-      .catch(() => setUser(null))
-      .finally(() => setIsLoading(false));
-  }, []);
+useEffect(() => {
+  const token = localStorage.getItem('access_token');
+  if (!token) {
+    setUser(null);
+    setIsLoading(false);
+    return;
+  }
+  authApi
+    .verifyAuth()
+    .then(() => refreshUser())
+    .catch(() => {
+      localStorage.removeItem('access_token');
+      setUser(null);
+    })
+    .finally(() => setIsLoading(false));
+}, []);
 
   const refreshUser = async () => {
     const response = await userApi.getProfile();
