@@ -41,7 +41,7 @@ export default function DashboardPage() {
           {/* Logo */}
           <div className={`flex flex-col items-center gap-2 pb-4 border-b ${dark ? 'border-white/5' : 'border-black/10'}`}>
             <img
-              src="/src/assets/brioboxlogo.png"
+              src="/brioboxlogo.png"
               alt="BrioBox"
               className={`w-12 h-12 object-contain ${dark ? 'drop-shadow-[0_0_10px_rgba(180,0,0,0.4)]' : ''}`}
             />
@@ -115,7 +115,7 @@ export default function DashboardPage() {
             {/* Avatar usuario */}
             <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-colors cursor-pointer ${dark ? 'border-white/5 bg-white/5 hover:border-red-900/30' : 'border-black/10 bg-black/5'}`}>
               <img
-                src="/src/assets/user.png"
+                src="/user.png"
                 alt="user"
                 className="w-6 h-6 rounded-full object-cover"
               />

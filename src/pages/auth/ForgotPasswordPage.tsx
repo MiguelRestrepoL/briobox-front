@@ -46,7 +46,7 @@ export default function ForgotPasswordPage() {
             {/* Header */}
             <div className="flex flex-col items-center gap-2">
               <img
-                src="/src/assets/brioboxlogo.png"
+                src="/brioboxlogo.png"
                 alt="BrioBox"
                 className="w-16 h-16 object-contain drop-shadow-[0_0_15px_rgba(180,0,0,0.4)]"
               />
