@@ -23,13 +23,33 @@ export default function DashboardPage() {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(true);
   const [active, setActive] = useState('Dashboard');
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = async () => {
+    setLoggingOut(true);
     await logout();
     navigate('/login');
   };
 
   const dark = darkMode;
+
+  if (loggingOut) return (
+    <div className="min-h-screen bg-[#020202] flex items-center justify-center relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_#1a0000_0%,_#050000_35%,_#000000_65%)]" />
+      <div className="absolute w-[400px] h-[400px] rounded-full blur-[120px] bg-red-950/20 pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      <div className="relative z-10 flex flex-col items-center gap-4">
+        <img
+          src="/brioboxlogo.png"
+          alt="BrioBox"
+          className="w-16 h-16 object-contain opacity-60 animate-pulse"
+        />
+        <div className="w-16 h-px bg-red-900/40" />
+        <p className="text-white/30 text-[11px] tracking-[0.5em] uppercase animate-pulse">
+          Cerrando sesión...
+        </p>
+      </div>
+    </div>
+  );
 
   return (
     <div className={`flex min-h-screen transition-colors duration-500 ${dark ? 'bg-[#0a0a0a] text-white' : 'bg-[#f0f0f0] text-[#111]'}`}>
@@ -80,9 +100,11 @@ export default function DashboardPage() {
         {/* Logout */}
         <button
           onClick={handleLogout}
+          disabled={loggingOut}
           className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs tracking-wide transition-all ${dark ? 'text-white/30 hover:text-red-500 hover:bg-red-950/20' : 'text-black/40 hover:text-red-600 hover:bg-red-50'}`}
         >
-          <span>🚪</span> Logout
+          <span>{loggingOut ? '⏳' : '🚪'}</span>
+          {loggingOut ? 'Cerrando sesión...' : 'Logout'}
         </button>
       </aside>
 
