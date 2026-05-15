@@ -3,11 +3,11 @@ import type { User, UpdateUserPayload, ApiResponse } from '../types';
 
 export const userApi = {
   getProfile: () =>
-    http.get<User>('/users/profile'),
+    http.get<{ success: boolean; user: User }>('/users/user'),
 
   updateProfile: (payload: UpdateUserPayload) =>
-    http.put<User>('/users/profile', payload),
+    http.put<User>('/users/user', payload),
 
   deleteAccount: () =>
-    http.delete<ApiResponse>('/users/profile'),
+    http.delete<ApiResponse>('/users/user'),
 };

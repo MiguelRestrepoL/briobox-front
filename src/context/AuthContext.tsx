@@ -18,17 +18,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const refreshUser = async () => {
-    const profile = await userApi.getProfile();
-    setUser(profile);
+    const response = await userApi.getProfile();
+    setUser(response.user);
   };
 
   const login = async (payload: LoginPayload) => {
-    await authApi.login(payload);
+    const response = await authApi.login(payload) as any;
+    if (response.token) {
+      localStorage.setItem('access_token', response.token);
+    }
     await refreshUser();
   };
 
   const logout = async () => {
     await authApi.logout();
+    localStorage.removeItem('access_token');
     setUser(null);
   };
 

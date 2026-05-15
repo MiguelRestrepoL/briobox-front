@@ -10,10 +10,15 @@ interface RequestOptions {
 async function request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
   const { method = 'GET', body } = options;
 
+  const token = localStorage.getItem('access_token');
+
   const config: RequestInit = {
     method,
     credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
   };
 
   if (body !== undefined) config.body = JSON.stringify(body);
