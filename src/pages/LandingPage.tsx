@@ -60,7 +60,7 @@ export default function LandingPage() {
         {/* Logo */}
         <div className={`relative transition-all duration-[3000ms] ${pulse ? 'drop-shadow-[0_0_40px_rgba(180,0,0,0.5)]' : 'drop-shadow-[0_0_15px_rgba(180,0,0,0.2)]'}`}>
           <img
-            src="src/assets/brioboxlogo.png"
+            src="/brioboxlogo.png"
             alt="BrioBox"
             className="w-28 h-28 object-contain opacity-95"
           />
