@@ -28,7 +28,7 @@ export default function DashboardPage() {
 const handleLogout = async () => {
   setLoggingOut(true);
   await logout();
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  await new Promise(resolve => setTimeout(resolve, 2000));
   navigate('/login');
 };
 

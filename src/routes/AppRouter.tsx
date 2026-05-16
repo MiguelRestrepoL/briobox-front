@@ -7,6 +7,7 @@ import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
 import DashboardPage from '../pages/DashboardPage';
 import ProfilePage from '../pages/user/ProfilePage';
 import LandingPage from '../pages/LandingPage';
+import RegisterClientPage from '../pages/RegisterClientPage';
 
 export function AppRouter() {
   return (
@@ -23,6 +24,7 @@ export function AppRouter() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/register-client" element={<RegisterClientPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/login" replace />} />
