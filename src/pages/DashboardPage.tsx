@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 const menuItems = [
-  { label: 'Usuarios', icon: '👤', path: '/users' },
+  { label: 'Clientes', icon: '👤', path: '/clients' },
   { label: 'Membresías', icon: '🎫', path: '/memberships' },
   { label: 'Cuadre de caja', icon: '💰', path: '/cash' },
   { label: 'Proveedores', icon: '📦', path: '/suppliers' },
   { label: 'Productos', icon: '🛍️', path: '/products' },
-  { label: 'Registrar', icon: '➕', path: '/register' },
+  { label: 'Registrar Empleado', icon: '➕', path: '/register' },
   { label: 'Ajustes', icon: '⚙️', path: '/settings' },
 ];
 
