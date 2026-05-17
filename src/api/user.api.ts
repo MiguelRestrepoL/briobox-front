@@ -2,7 +2,10 @@ import { http } from './client';
 import type { User, UpdateUserPayload, ApiResponse } from '../types';
 
 export interface ClientPayload {
-  full_name: string;
+  first_name: string;
+  middle_name: string;
+  paternal_last_name: string;
+  maternal_last_name: string;
   age: number;
   email: string;
   phone: string;
@@ -11,7 +14,10 @@ export interface ClientPayload {
 
 export interface Client {
   id: string;
-  full_name: string;
+  first_name: string;
+  middle_name: string;
+  paternal_last_name: string;
+  maternal_last_name: string;
   age: number;
   email: string;
   phone: string;
@@ -28,7 +34,6 @@ export const userApi = {
   deleteAccount: () =>
     http.delete<ApiResponse>('/users/user'),
 
-  // Clientes
   createClient: (payload: ClientPayload) =>
     http.post<{ userId: string }>('/users/customer', payload),
 

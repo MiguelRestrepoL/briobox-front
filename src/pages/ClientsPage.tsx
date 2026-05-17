@@ -25,7 +25,16 @@ export default function ClientsPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
-  const [editForm, setEditForm] = useState({ full_name: '', age: '', email: '', phone: '', address: '' });
+  const [editForm, setEditForm] = useState({
+    first_name: '',
+    middle_name: '',
+    paternal_last_name: '',
+    maternal_last_name: '',
+    age: '',
+    email: '',
+    phone: '',
+    address: '',
+  });
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
 
@@ -56,13 +65,18 @@ export default function ClientsPage() {
   };
 
   const filteredClients = clients.filter(c =>
-    c.full_name?.toLowerCase().includes(search.toLowerCase())
+    `${c.first_name} ${c.middle_name} ${c.paternal_last_name} ${c.maternal_last_name}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
   );
 
   const openEdit = (client: Client) => {
     setEditingClient(client);
     setEditForm({
-      full_name: client.full_name,
+      first_name: client.first_name,
+      middle_name: client.middle_name,
+      paternal_last_name: client.paternal_last_name,
+      maternal_last_name: client.maternal_last_name,
       age: String(client.age),
       email: client.email,
       phone: client.phone,
@@ -76,7 +90,10 @@ export default function ClientsPage() {
     setEditLoading(true);
     try {
       await userApi.updateClient(editingClient.id, {
-        full_name: editForm.full_name,
+        first_name: editForm.first_name,
+        middle_name: editForm.middle_name,
+        paternal_last_name: editForm.paternal_last_name,
+        maternal_last_name: editForm.maternal_last_name,
         age: Number(editForm.age),
         email: editForm.email,
         phone: editForm.phone,
@@ -173,7 +190,7 @@ export default function ClientsPage() {
         {/* Contenido */}
         <div className="flex-1 p-8 flex flex-col gap-6">
 
-          {/* Buscador + botón registrar */}
+          {/* Buscador + botón */}
           <div className="flex items-center justify-between gap-4">
             <div className={`flex items-center gap-2 px-4 py-2 rounded-lg border flex-1 max-w-sm transition-colors ${dark ? 'bg-[#111] border-white/5 focus-within:border-red-900/40' : 'bg-white border-black/10'}`}>
               <span className="text-white/30 text-sm">🔍</span>
@@ -198,14 +215,13 @@ export default function ClientsPage() {
 
             {/* Header tabla */}
             <div className={`grid grid-cols-5 px-4 py-3 text-[10px] uppercase tracking-widest border-b ${dark ? 'bg-[#111] border-white/5 text-white/30' : 'bg-gray-50 border-black/10 text-black/40'}`}>
-              <span>Nombre</span>
+              <span>Nombre completo</span>
               <span>Email</span>
               <span>Teléfono</span>
               <span>Dirección</span>
               <span className="text-right">Acciones</span>
             </div>
 
-            {/* Filas */}
             {loading ? (
               <div className={`px-4 py-8 text-center text-xs tracking-widest uppercase animate-pulse ${dark ? 'text-white/20' : 'text-black/20'}`}>
                 Cargando clientes...
@@ -224,7 +240,9 @@ export default function ClientsPage() {
                       : `border-black/5 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-gray-100`
                   }`}
                 >
-                  <span className={`font-medium truncate ${dark ? 'text-white/80' : 'text-black/80'}`}>{client.full_name}</span>
+                  <span className={`font-medium truncate ${dark ? 'text-white/80' : 'text-black/80'}`}>
+                    {client.first_name} {client.middle_name} {client.paternal_last_name} {client.maternal_last_name}
+                  </span>
                   <span className={`truncate text-xs ${dark ? 'text-white/40' : 'text-black/40'}`}>{client.email}</span>
                   <span className={`truncate text-xs ${dark ? 'text-white/40' : 'text-black/40'}`}>{client.phone}</span>
                   <span className={`truncate text-xs ${dark ? 'text-white/40' : 'text-black/40'}`}>{client.address}</span>
@@ -276,8 +294,29 @@ export default function ClientsPage() {
 
             <div className={`w-full h-px ${dark ? 'bg-red-900/30' : 'bg-black/10'}`} />
 
+            {/* Nombres en grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { name: 'first_name', label: 'Primer nombre', placeholder: 'Juan' },
+                { name: 'middle_name', label: 'Segundo nombre', placeholder: 'Carlos' },
+                { name: 'paternal_last_name', label: 'Apellido paterno', placeholder: 'Pérez' },
+                { name: 'maternal_last_name', label: 'Apellido materno', placeholder: 'García' },
+              ].map(field => (
+                <div key={field.name} className="flex flex-col gap-1">
+                  <label className={`text-[10px] uppercase tracking-widest ${dark ? 'text-white/40' : 'text-black/40'}`}>{field.label}</label>
+                  <input
+                    type="text"
+                    value={editForm[field.name as keyof typeof editForm]}
+                    onChange={e => setEditForm(prev => ({ ...prev, [field.name]: e.target.value }))}
+                    placeholder={field.placeholder}
+                    className={`rounded-lg px-3 py-2 text-sm outline-none border transition-colors ${dark ? 'bg-[#111] border-[#2a2a2a] text-white placeholder-white/20 focus:border-red-900/60' : 'bg-gray-50 border-black/10 text-black focus:border-red-300'}`}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Resto de campos */}
             {[
-              { name: 'full_name', label: 'Nombre completo', placeholder: 'Juan Pérez' },
               { name: 'age', label: 'Edad', placeholder: '25', type: 'number' },
               { name: 'email', label: 'Email', placeholder: 'cliente@email.com', type: 'email' },
               { name: 'phone', label: 'Teléfono', placeholder: '3001234567' },
