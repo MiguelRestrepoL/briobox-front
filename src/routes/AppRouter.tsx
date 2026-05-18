@@ -9,6 +9,7 @@ import ProfilePage from '../pages/user/ProfilePage';
 import LandingPage from '../pages/LandingPage';
 import RegisterClientPage from '../pages/RegisterClientPage';
 import ClientsPage from '../pages/ClientsPage';
+import MembershipsPage from '../pages/MembershipsPage';
 
 export function AppRouter() {
   return (
@@ -27,6 +28,7 @@ export function AppRouter() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/register-client" element={<RegisterClientPage />} />
           <Route path="/clients" element={<ClientsPage />} />
+          <Route path="/memberships" element={<MembershipsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/login" replace />} />
